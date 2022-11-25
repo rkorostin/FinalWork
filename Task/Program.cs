@@ -12,10 +12,42 @@ Console.Clear();
 
 int num = GetNumberFromUser("Сколько элементов будет в массиве? Укажите число: ", "Ошибка ввода! Нужно любое натуральное число");
 
-string[] array = new string[num];
+string[] arrayFirst = new string[num];
 
-FillArray(array);
-PrintArray(array);
+FillFirstArray(arrayFirst);
+PrintArray(arrayFirst);
+
+int length = CheckLengthArray(arrayFirst);
+string[] arraySecond = new string[length];
+
+FillSecondArray(arrayFirst, arraySecond);
+Console.Write(" -> ");
+PrintArray(arraySecond);
+
+//Вычисление длины массива
+int CheckLengthArray(string[] inArray)
+{
+    int length = 0;
+    for (int i = 0; i < inArray.Length; i++)
+    {
+        if (inArray[i].Length <= 3) length++;
+    }
+    return length;
+}
+
+//Заполнение второго массива
+void FillSecondArray(string[] inArray1, string[] inArray2)
+{
+    int count = 0;
+    for (int i = 0; i < inArray1.Length; i++)
+    {
+        if (inArray1[i].Length <= 3)
+        {
+            inArray2[count] = inArray1[i];
+            count++;
+        }
+    }
+}
 
 //Запрос пользователю на ввод числа
 int GetNumberFromUser(string message, string errorMessage)
@@ -30,8 +62,8 @@ int GetNumberFromUser(string message, string errorMessage)
     }
 }
 
-// Заполнение массива через ввод в консоль
-void FillArray(string[] inArray)
+// Заполнение первого массива через ввод в консоль
+void FillFirstArray(string[] inArray)
 {
     for (int i = 0; i < inArray.Length; i++)
     {
@@ -43,10 +75,14 @@ void FillArray(string[] inArray)
 //Вывод на печать массива
 void PrintArray(string[] inArray)
 {
-    Console.Write("[");
-    for (int i = 0; i < inArray.Length - 1; i++)
+    if (inArray.Length == 0) Console.WriteLine("[]");
+    else
     {
-        Console.Write($"\"{inArray[i]}\", ");
+        Console.Write("[");
+        for (int i = 0; i < inArray.Length - 1; i++)
+        {
+            Console.Write($"\"{inArray[i]}\", ");
+        }
+        Console.Write($"\"{inArray[inArray.Length - 1]}\"]");
     }
-    Console.Write($"\"{inArray[inArray.Length - 1]}\"]");
 }
